@@ -3,7 +3,6 @@ from typing import TypedDict , Annotated
 from langchain.messages import AnyMessage 
 import operator 
 
-
 class TravelState(TypedDict):
     messages: Annotated[list[AnyMessage], operator.add]
     user_query: str
@@ -11,5 +10,5 @@ class TravelState(TypedDict):
     hotel_results: str
     itinerary: str
     llm_calls: int
-
+    weather_results: str
 

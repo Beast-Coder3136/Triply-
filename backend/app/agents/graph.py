@@ -1,7 +1,7 @@
 
 from langgraph.graph import StateGraph , START , END
 
-from agents.nodes import flight_agent , hotel_agent , itinerary_agent , final_agent 
+from agents.nodes import flight_agent , hotel_agent , itinerary_agent , final_agent ,weather_agent
 import os
 import uuid
 import psycopg
@@ -15,12 +15,14 @@ graph = StateGraph(TravelState)
 
 graph.add_node("flight_agent", flight_agent)
 graph.add_node("hotel_agent", hotel_agent)
+graph.add_node("weather_agent", weather_agent)
 graph.add_node("itinerary_agent", itinerary_agent)
 graph.add_node("final_agent", final_agent)
 
 graph.add_edge(START, "flight_agent")
 graph.add_edge("flight_agent", "hotel_agent")
-graph.add_edge("hotel_agent", "itinerary_agent")
+graph.add_edge("hotel_agent", "weather_agent")
+graph.add_edge("weather_agent", "itinerary_agent")
 graph.add_edge("itinerary_agent", "final_agent")
 graph.add_edge("final_agent", END)
 
@@ -57,20 +59,20 @@ def run_travel_agent(user_input: str, thread_id: str | None = None):
             "user_query": user_input,
             "flight_results": "",
             "hotel_results": "",
+            "weather_results": "",
             "itinerary": "",
             "llm_calls": 0
         },
         config=config
     )
-
     final_answer = result["messages"][-1]
-    print(final_answer)
-    print("\n")
+
     return {
         "thread_id": thread_id,
         "answer": final_answer,
         "flight_results": result.get("flight_results", ""),
         "hotel_results": result.get("hotel_results", ""),
+        "weather_results": result.get("weather_results", ""),
         "itinerary": result.get("itinerary", ""),
         "llm_calls": result.get("llm_calls", 0),
     }

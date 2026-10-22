@@ -25,7 +25,6 @@ async def plan_travel_trip(body : TravelQueryRequest ):
             thread_id=body.thread_id
         )
 
-        print(result)
         return result 
 
     except Exception as e:
