@@ -164,7 +164,6 @@ def _serialize_result(
             else result.get("itinerary", "")
         ),
         "selected_agents": result.get("selected_agents", []),
-        "trip_constraints": result.get("trip_constraints", {}),
         "supervisor_reasoning": result.get("supervisor_reasoning", ""),
         "guardrail_allowed": result.get("guardrail_allowed", True),
         "guardrail_reason": result.get("guardrail_reason", ""),

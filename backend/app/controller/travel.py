@@ -33,7 +33,7 @@ async def plan_travel_trip(body : TravelQueryRequest ):
             user_input=user_message,
             thread_id=body.thread_id
         )
-
+        print(result)
         return result 
 
     except Exception as e:
@@ -73,7 +73,6 @@ async def approve_travel_plan(body : ApprovalRequest):
 
     except Exception as exc:
         print("APPROVAL ERROR:", exc)
-        traceback.print_exc()
 
         return JSONResponse(
             status_code=500,

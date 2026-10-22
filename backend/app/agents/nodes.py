@@ -44,7 +44,7 @@ class TripConstraintSchema(BaseModel):
     special_preferences : list[str]
 
 class SupervisorResultSchema(BaseModel):
-    selected_agents : list = Field(description="list of all selected agents that supervisor will choose")
+    selected_agents : list[str] = Field(description="list of selected agents that supervisor will choose")
     trip_contraints : TripConstraintSchema
     reasoning : str = Field(description = "The Supervisor agent reasoning")
 
@@ -300,9 +300,7 @@ def hotel_agent(state: TravelState):
 
 
 def weather_agent(state: TravelState):
-    city = extract_destination(
-        state["user_query"]
-    )
+    city =  asyncio.run( extract_destination(state["user_query"]) )
 
     try:
         weather_data = asyncio.run(
